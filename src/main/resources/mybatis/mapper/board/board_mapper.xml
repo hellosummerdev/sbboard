@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--SQL 및 O/R 매핑(Object Relational Mapping) 설정을 설명하는 XML 파일-->
+<!--Mapper 폴더는 애플리케이션에서 사용할 쿼리를 담고 있는 XML 파일을 저장-->
+<!--SQL문을 XML형식의 파일로 분리시켜 저장 관리를 할 수 있고 Java소스 에서 id만 호출하여 개발을 하는데 편리해지는 장점-->
+
+<mapper namespace="com.sbboard.board.BoardMapper">
+    <insert id="insertBoard" parameterType="boardDto" >
+        insert into board(board_title, board_content, user_id)
+        values (#{board_title}, #{board_content}, #{user_id})
+    </insert>
+
+    <select id="selectBoard" resultType="boardDto">
+        select *
+        from board
+        where use_yn = 1
+    </select>
+
+    <select id="detailBoard" parameterType="boardDto" resultType="boardDto">
+        select *
+        from board
+        where seq = #{seq}
+    </select>
+</mapper>
