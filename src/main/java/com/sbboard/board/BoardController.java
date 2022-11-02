@@ -1,5 +1,8 @@
 package com.sbboard.board;
 
+import com.sbboard.comment.CommentDto;
+import com.sbboard.comment.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class BoardController {
-    @Autowired
-    private BoardService boardService;
 
+    private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/board")
     public String board(Model model) {
@@ -37,8 +41,9 @@ public class BoardController {
         try {
             List<BoardDto> boardList = this.boardService.selectBoard();
             map.put("data", boardList);
+            map.put("data", boardList);
             map.put("status", 200);
-        } catch (Exception var3) {
+        } catch (Exception e) {
             map.put("status", 500);
         }
 
@@ -50,7 +55,11 @@ public class BoardController {
         try {
             BoardDto detailBoard = this.boardService.detailBoard(seq);
             model.addAttribute("detail", detailBoard);
-        } catch (Exception var4) {
+
+            // 댓글 리스트
+            List<CommentDto> commentList = this.commentService.getCommentList();
+            model.addAttribute("commentList", commentList);
+        } catch (Exception e) {
             model.addAttribute("status", 500);
         }
 

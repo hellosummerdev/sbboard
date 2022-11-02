@@ -1,28 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>게시판 목록</title>
-</head>
-<body>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="layout/layout">
+<div layout:fragment="content">
 <h2>Hello Templates</h2>
-<table>
-    <thead>
-    <tr>
-        <td>Title</td>
-        <td>Writer</td>
-        <td>Date</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="board : ${boardList}">
-        <td>
-            <a th:href="@{|/board/detail/*{board.getSeq()}|}"  th:text="*{board.getBoard_title()}"></a>
-        </td>
-        <td th:text="*{board.getUser_id()}"></td>
-        <td th:text="*{#dates.format(board.getCreated_at(), 'yyyy-MM-dd')}"></td>
-    </tr>
-    </tbody>
-</table>
-</body>
+    <table>
+        <thead>
+        <tr>
+            <td>Title</td>
+            <td>Writer</td>
+            <td>Date</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boardList}">
+            <td>
+                <a th:href="@{|/board/detail/*{board.getSeq()}|}"  th:text="*{board.getBoard_title()}"></a>
+            </td>
+            <td th:text="*{board.getUser_id()}"></td>
+            <td th:text="*{#dates.format(board.getCreated_at(), 'yyyy-MM-dd')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </html>

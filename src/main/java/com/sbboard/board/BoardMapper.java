@@ -8,5 +8,5 @@ import java.util.List;
 public interface BoardMapper {
     List<BoardDto> selectBoard();
 
-    BoardDto detailBoard(Integer var1);
+    BoardDto detailBoard(Integer seq);
 }
