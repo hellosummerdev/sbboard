@@ -14,8 +14,8 @@ public class CommentService {
         return isCreate;
     }
 
-    public List<CommentDto> getCommentList() {
-        List<CommentDto> commentList = commentMapper.getCommentList();
+    public List<CommentDto> getCommentList(Integer seq) {
+        List<CommentDto> commentList = commentMapper.getCommentList(seq);
         return commentList;
     }
 }

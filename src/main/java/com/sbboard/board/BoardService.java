@@ -1,13 +1,15 @@
 package com.sbboard.board;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class BoardService {
-    @Autowired
-    private BoardMapper boardMapper;
+
+    private final BoardMapper boardMapper;
 
     public List<BoardDto> selectBoard() {
         List<BoardDto> boardList = this.boardMapper.selectBoard();
@@ -21,6 +23,8 @@ public class BoardService {
     }
 
 
-
-
+    public int createBoard(BoardDto boardDto) {
+        int isCreate = boardMapper.createBoard(boardDto);
+        return isCreate;
+    }
 }

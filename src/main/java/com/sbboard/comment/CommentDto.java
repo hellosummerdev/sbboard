@@ -8,8 +8,8 @@ import java.util.Date;
 @Data
 @Alias("commentDto")
 public class CommentDto {
+    private int idx;
     private int seq;
-    private int board_seq;
     private String comment_content;
     private String user_id;
     private Date created_at;

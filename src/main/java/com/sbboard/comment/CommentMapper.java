@@ -8,5 +8,5 @@ import java.util.List;
 public interface CommentMapper {
     int create(CommentDto commentDto);
 
-    List<CommentDto> getCommentList();
+    List<CommentDto> getCommentList(Integer seq);
 }

@@ -7,7 +7,7 @@
 <!--SQL문을 XML형식의 파일로 분리시켜 저장 관리를 할 수 있고 Java소스 에서 id만 호출하여 개발을 하는데 편리해지는 장점-->
 
 <mapper namespace="com.sbboard.board.BoardMapper">
-    <insert id="insertBoard" parameterType="boardDto" >
+    <insert id="createBoard" parameterType="boardDto">
         insert into board(board_title, board_content, user_id)
         values (#{board_title}, #{board_content}, #{user_id})
     </insert>

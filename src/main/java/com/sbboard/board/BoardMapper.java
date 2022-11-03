@@ -9,4 +9,6 @@ public interface BoardMapper {
     List<BoardDto> selectBoard();
 
     BoardDto detailBoard(Integer seq);
+
+    int createBoard(BoardDto boardDto);
 }

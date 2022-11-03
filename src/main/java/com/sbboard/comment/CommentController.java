@@ -20,9 +20,11 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/create/{seq}")
-    public String createComment(CommentDto commentDto, @PathVariable("seq") Integer board_seq, HttpSession session) {
-        String user_id = (String) session.getAttribute("user_id");
-        commentDto.setUser_id(user_id);
+    public String createComment(CommentDto commentDto, @PathVariable("seq") Integer seq
+//            , HttpSession session
+    ) {
+//        String user_id = (String) session.getAttribute("user_id");
+//        commentDto.setUser_id(user_id);
         try {
             int isCreate = commentService.create(commentDto);
             if (isCreate == 1) {
@@ -31,7 +33,7 @@ public class CommentController {
                 System.out.println("댓글 저장 실패");
                 // todo : 댓글 저장 실패 시 alert 메세지 어떻게 띄우는지 찾아보기
             }
-            return String.format("redirect:/board/detail/%s", board_seq);
+            return String.format("redirect:/board/detail/%s", seq);
         } catch (Exception e) {
             return "redirect:/board/list";
         }

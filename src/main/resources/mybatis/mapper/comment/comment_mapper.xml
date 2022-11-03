@@ -4,14 +4,15 @@
 
 <mapper namespace="com.sbboard.comment.CommentMapper">
     <insert id="create" parameterType="commentDto">
-        insert into comment(board_seq, comment_content, user_id)
-        values (#{board_seq}, #{comment_content}, #{user_id})
+        insert into comment(seq, comment_content, user_id)
+        values (#{seq}, #{comment_content}, #{user_id})
     </insert>
 
     <select id="commentList" resultType="commentDto">
         select *
         from comment
         where use_yn = 1
+        and seq = #{seq}
         order by created_at desc
     </select>
 </mapper>
