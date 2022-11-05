@@ -57,19 +57,30 @@ public class BoardController {
 
     // 게시글 상세페이지
     @GetMapping("/detail/{seq}")
-    public String detail(Model model, @PathVariable("seq") Integer seq) {
+    public String detail(Model model, @PathVariable("seq") Integer seq, CommentDto commentDto) {
         try {
+            System.out.println("보드 상새내용 진입");
+            // 보드 상세 내용 불러오기
             BoardDto detailBoard = this.boardService.detailBoard(seq);
             model.addAttribute("detail", detailBoard);
 
-            // 댓글 리스트
+            System.out.println("댓글 리스트 진입");
+            // 댓글 리스트 불러오기
             List<CommentDto> commentList = this.commentService.getCommentList(seq);
             if (commentList == null) {
                 System.out.println("commentList == null");
                 model.addAttribute("commentList", 0);
+                System.out.println("comment 없음");
             } else {
+                // todo : commentList가 없는데 if 안으로 안넘어가지고 else로 넘어가지는 문제
+                System.out.println("comment 있음");
                 model.addAttribute("commentList", commentList);
+                model.addAttribute("commentDto", commentDto);
             }
+//            System.out.println("댓글 폼에 넘겨줄 오브젝트 진입");
+            // 댓글 폼을 위해 빈 오브젝트를 view에 넘겨주기
+//            model.addAttribute("commentDto", commentDto);
+            System.out.println("detail 정상 종료");
         } catch (Exception e) {
             model.addAttribute("status", 500);
         }

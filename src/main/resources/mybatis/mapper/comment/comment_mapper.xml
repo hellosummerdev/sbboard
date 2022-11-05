@@ -8,7 +8,7 @@
         values (#{seq}, #{comment_content}, #{user_id})
     </insert>
 
-    <select id="commentList" resultType="commentDto">
+    <select id="getCommentList" resultType="commentDto">
         select *
         from comment
         where use_yn = 1

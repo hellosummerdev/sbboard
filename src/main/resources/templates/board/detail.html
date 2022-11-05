@@ -18,9 +18,12 @@
   </div>
 
 <!--  댓글 폼-->
-  <form th:action="@{|comment/create/${detail.getSeq()}|}" method="post">
-    <input type="hidden" name="seq" th:value="*{detail.getSeq()}"></input>
-    <textarea name="comment_content" id="comment_content" rows="5"></textarea>
+  <form th:action="@{|/comment/create/${detail.getSeq()}|}" th:object="${commentDto}" method="post">
+    <div role="alert" th:if="${#fields.hasAnyErrors()}">
+      <div th:each="err : ${#fields.allError()}" th:text="${err}" />
+    </div>
+    <textarea th:field="*{comment_content}" rows="5"></textarea>
+    <input type="hidden" th:field="*{seq}"></input>
     <input type="submit" value="댓글달기">
   </form>
 </div>
