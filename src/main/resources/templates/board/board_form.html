@@ -2,16 +2,13 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="layout/layout">
+        layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
     <h5>질문 등록하기</h5>
 
-<!--    th:object를 사용하여 폼의 속성들이 QuestionForm의 속성들로 구성된다는 점을 타임리프 엔진에 알려준 .-->
+<!--    th:object를 사용하여 폼의 속성들이 boarDto의 속성들로 구성된다는 점을 타임리프 엔진에 알려준다-->
     <form th:action="@{/board/create}" th:object="${boardDto}" method="post">
-
-        <div role="alert" th:if="${#fields.hasAnyErrors()}">
-            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-        </div>
+        <div th:replace="layout/form_errors :: formErrorsFragment"></div>
 
         <div>
             <label th:for="board_title">제목</label>

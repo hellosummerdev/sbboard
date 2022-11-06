@@ -67,15 +67,12 @@ public class BoardController {
             System.out.println("댓글 리스트 진입");
             // 댓글 리스트 불러오기
             List<CommentDto> commentList = this.commentService.getCommentList(seq);
-            if (commentList == null) {
-                System.out.println("commentList == null");
-                model.addAttribute("commentList", 0);
+            if (commentList.isEmpty()) { // commentList==null 이 아닌 isEmpty로 빈 테이블 체크
                 System.out.println("comment 없음");
+                model.addAttribute("commentList", commentList);
             } else {
-                // todo : commentList가 없는데 if 안으로 안넘어가지고 else로 넘어가지는 문제
                 System.out.println("comment 있음");
                 model.addAttribute("commentList", commentList);
-                model.addAttribute("commentDto", commentDto);
             }
 //            System.out.println("댓글 폼에 넘겨줄 오브젝트 진입");
             // 댓글 폼을 위해 빈 오브젝트를 view에 넘겨주기

@@ -1,7 +1,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="layout/layout">
+        layout:decorate="~{layout/layout}">
 <div layout:fragment="content">
 <!--  게시글 내용-->
   <h1 th:text="${detail.getBoard_title()}"></h1>
@@ -19,11 +19,13 @@
 
 <!--  댓글 폼-->
   <form th:action="@{|/comment/create/${detail.getSeq()}|}" th:object="${commentDto}" method="post">
-    <div role="alert" th:if="${#fields.hasAnyErrors()}">
-      <div th:each="err : ${#fields.allError()}" th:text="${err}" />
-    </div>
+<!--    todo : 에러 메세지가 화면에 출력이 안 되는 이유 찾아보기 -->
+    <div th:replace="layout/form_errors :: formErrorsFragment"></div>
+<!--    <div role="alert" th:if="${#fields.hasAnyErrors()}">-->
+<!--      <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
+<!--    </div>-->
     <textarea th:field="*{comment_content}" rows="5"></textarea>
-    <input type="hidden" th:field="*{seq}"></input>
+    <input type="hidden" th:field="*{seq}">
     <input type="submit" value="댓글달기">
   </form>
 </div>

@@ -14,6 +14,7 @@ public class CommentDto {
 
     @NotEmpty(message = "내용은 필수항목입니다.")
     private String comment_content;
+
     private String user_id;
     private Date created_at;
     private Date modified_at;

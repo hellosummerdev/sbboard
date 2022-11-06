@@ -1,5 +1,6 @@
 package com.sbboard.comment;
 
+import com.sbboard.board.BoardDto;
 import com.sbboard.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +24,19 @@ public class CommentController {
 
     // todo : 댓글 create 404에러 수정하기
     @PostMapping("/create/{seq}")
-    public String createComment(Model model, @Valid CommentDto commentDto, @PathVariable("seq") Integer seq,
-                                BindingResult bindingResult
+    // 파라미터 순서에도 영향을 받기 때문에 Dto 다음 BindingResult가 와야 함
+    public String createComment(@Valid CommentDto commentDto, BindingResult bindingResult, Model model, @PathVariable("seq") Integer seq
+
 //            , HttpSession session
     ) {
 //        String user_id = (String) session.getAttribute("user_id");
 //        commentDto.setUser_id(user_id);
-
-        System.out.println();
+        System.out.println("create comment 진입");
         if (bindingResult.hasErrors()) {
-            model.addAttribute("commentDto", commentDto);
-            return "board/detail/{seq}";
+            System.out.println("에러 진입");
+//            model.addAttribute("boardDto", new BoardDto());
+//            return String.format("redirect:/board/detail/%s", seq);
+            return "redirect:/board/detail/{seq}";
         }
 
         try {
