@@ -12,6 +12,8 @@
     <title>Hello, Board Project with Spring-Boot!</title>
 </head>
 <body>
+<!-- navigation bar -->
+<nav th:replace="layout/navbar :: navbarFragment"></nav>
 <!-- 기본 템플릿 안에 삽입될 내용 start-->
 <th:block layout:fragment="content"></th:block>
 <!-- 기본 템플릿 안에 삽입될 내용 end-->

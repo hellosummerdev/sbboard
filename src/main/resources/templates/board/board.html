@@ -2,7 +2,8 @@
 <html
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="layout/layout">
+    layout:decorate="~{layout/layout}">
+<!--    타임리프에서 경로 표시할 때에는 앞에 ~물결표시 넣어주기. 안 넣어주면 layout/layout 못찾는다고 에러남.-->
 <div layout:fragment="content">
 <h2>Hello Templates</h2>
     <table>
