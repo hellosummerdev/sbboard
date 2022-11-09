@@ -25,7 +25,7 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
-    // 게시글 전체목록 조히
+    // * 게시글 전체목록 조히
     @GetMapping("/board")
     public String board(Model model) {
         try {
@@ -55,7 +55,7 @@ public class BoardController {
         return map;
     }
 
-    // 게시글 상세페이지
+    // * 게시글 상세페이지
     @GetMapping("/detail/{seq}")
     public String detail(Model model, @PathVariable("seq") Integer seq, CommentDto commentDto) {
         try {
@@ -85,7 +85,7 @@ public class BoardController {
         return "board/detail";
     }
 
-    // 신규 게시글
+    // * 신규 게시글
     @GetMapping("/create")
     public String createBoard(BoardDto boardDto) {
         return "board/board_form";

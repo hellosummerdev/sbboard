@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sbboard.user.UserMapper">
+<!--    아이디 중복체크-->
+    <select id="checkId" parameterType="userDto" resultType="int">
+        select count(*)
+        from user
+        where user_id = #{user_id}
+    </select>
+
+<!--    회원가입-->
+    <insert id="createUser" parameterType="userDto">
+        insert into user(user_id, user_name, user_pwd)
+        values (#{user_id}, #{user_name}, #{user_pwd})
+    </insert>
+
+<!--    로그인-->
+    <select id="login" parameterType="userDto" resultType="int">
+<!--        select count(*)-->
+        from user
+        where id = #{user_id}
+        and user_pwd = #{user_pwd}
+    </select>
+</mapper>
