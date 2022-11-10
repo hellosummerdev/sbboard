@@ -16,6 +16,7 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
 
+    // * 회원가입
     @GetMapping("/signup")
     public String signup(UserDto userDto) {
         System.out.println("회원가입 진입");
@@ -42,6 +43,12 @@ public class UserController {
         } else {
             return "user/signup_form";
         }
-
     }
+
+    // * 로그인
+    @GetMapping("/login")
+    public String login() {
+        return "user/login_form";
+    }
+
 }
