@@ -3,6 +3,8 @@ package com.sbboard.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -33,4 +35,15 @@ public class UserService {
             return isCreate;
         }
     }
+
+    // * 로그인 아이디, 비밀번호 체크
+    public int userCheck(UserDto userDto) {
+        int isUser = userMapper.userCheck(userDto);
+        return isUser;
+    }
+
+//    public Optional<UserDto> findById(String user_id) {
+//        Optional<UserDto> _user = userMapper.findById(user_id);
+//        return _user;
+//    }
 }

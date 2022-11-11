@@ -17,10 +17,24 @@
     </insert>
 
 <!--    로그인-->
-    <select id="login" parameterType="userDto" resultType="int">
-<!--        select count(*)-->
+    <select id="userCheck" parameterType="userDto" resultType="int">
+        select count(*)
         from user
-        where id = #{user_id}
+        where user_id = #{user_id}
         and user_pwd = #{user_pwd}
     </select>
+
+<!--    <resultMap id="userMap" type="userDto">-->
+<!--        <result column="user_id" property="user_id" jdbcType="VARCHAR" javaType="String" />-->
+<!--        <result column="user_name" property="user_name" jdbcType="VARCHAR" javaType="String" />-->
+<!--        <result column="user_pwd" property="user_pwd" jdbcType="VARCHAR" javaType="String" />-->
+<!--        <collection column="userList" property="userList" select="findById" />-->
+<!--    </resultMap>-->
+<!--    -->
+<!--&lt;!&ndash;    사용자 확인&ndash;&gt;-->
+<!--    <select id="findById" parameterType="String" resultType="userMap">-->
+<!--        select user_id, user_name, user_pwd-->
+<!--        from user-->
+<!--        where user_id = #{user_id}-->
+<!--    </select>-->
 </mapper>

@@ -5,6 +5,7 @@ import org.apache.ibatis.type.Alias;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Alias("userDto")
@@ -23,4 +24,5 @@ public class UserDto {
     private boolean use_yn;
     private Date created_at;
     private Date modified_at;
+//    private List<UserDto> userList;
 }
