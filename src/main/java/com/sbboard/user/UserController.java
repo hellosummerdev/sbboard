@@ -14,18 +14,18 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
     // * 회원가입
-    @GetMapping("/user/signup")
+    @GetMapping("/signup")
     public String signup(UserDto userDto) {
         System.out.println("회원가입 진입");
         return "user/signup_form";
     }
 
-    @PostMapping("/user/signup")
+    @PostMapping("/signup")
     public String signup(@Valid UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user/signup_form";
@@ -48,22 +48,38 @@ public class UserController {
     }
 
     // * 로그인
-    @GetMapping("/user/login")
-    public String loginView(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        System.out.println(session);
+    @GetMapping("/login")
+    public String login() {
         return "user/login_form";
     }
 
-    @PostMapping("/user/login")
-    public String loginPost(UserDto userDto, HttpSession session) {
+    @PostMapping("/login")
+    public String loginPost(UserDto userDto, HttpServletRequest request) {
         int isUser = userService.userCheck(userDto);
         if (isUser == 1) {
-            session.setAttribute("id", userDto.getUser_id());
+//          HttpSession이 존재하면 현재 HttpSession을 반환하고
+//          존재하지 않으면 새로이 세션을 생성
+            HttpSession session = request.getSession(true);
+            System.out.println("###### " + session + " #######");
+            session.setAttribute("userDto", userDto);
+            session.setAttribute("user_name", userDto.getUser_name());
             return "redirect:/board/board";
         } else {
-            return "redirect:user/login_form";
+            return "user/login_form";
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) throws Exception {
+        System.out.println("로그아웃 진입");
+//        HttpSession이 존재하면 현재 HttpSession을 반환하고
+//        존재하지 않으면 새로이 생성하지 않고 그냥 null을 반환
+        HttpSession session = request.getSession(false);
+        System.out.println("###### " + session + " #######");
+        if (session != null) {
+            System.out.println("session을 삭제합니다.");
+            session.invalidate();
+        }
+        return "redirect:/board/board";
+    }
 }

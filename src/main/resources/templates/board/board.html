@@ -20,6 +20,8 @@
                 <a th:href="@{|/board/detail/*{board.getSeq()}|}"  th:text="*{board.getBoard_title()}"></a>
             </td>
             <td th:text="*{board.getUser_id()}"></td>
+            <td th:if="${session != null}" th:text="${session.user_name}"></td>
+
             <td th:text="*{#dates.format(board.getCreated_at(), 'yyyy-MM-dd')}"></td>
         </tr>
         </tbody>
