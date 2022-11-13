@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/comment")
@@ -25,13 +27,12 @@ public class CommentController {
     // todo : 댓글 create 404에러 수정하기
     @PostMapping("/create/{seq}")
     // 파라미터 순서에도 영향을 받기 때문에 Dto 다음 BindingResult가 와야 함
-    public String createComment(@Valid CommentDto commentDto, BindingResult bindingResult, Model model, @PathVariable("seq") Integer seq
-
-//            , HttpSession session
+    public String createComment(@Valid CommentDto commentDto, BindingResult bindingResult,
+                                Model model, @PathVariable("seq") Integer seq
+            , HttpServletRequest request
     ) {
-//        String user_id = (String) session.getAttribute("user_id");
-//        commentDto.setUser_id(user_id);
-        System.out.println("create comment 진입");
+
+
         if (bindingResult.hasErrors()) {
             System.out.println("에러 진입");
 //            model.addAttribute("boardDto", new BoardDto());
@@ -40,6 +41,10 @@ public class CommentController {
         }
 
         try {
+            System.out.println("create comment 진입");
+            HttpSession session = request.getSession();
+            String user_id = (String) session.getAttribute("user_id");
+            commentDto.setUser_id(user_id);
             commentDto.setSeq(seq);
             int isCreate = commentService.create(commentDto);
             if (isCreate == 1) {

@@ -60,9 +60,8 @@ public class UserController {
 //          HttpSession이 존재하면 현재 HttpSession을 반환하고
 //          존재하지 않으면 새로이 세션을 생성
             HttpSession session = request.getSession(true);
-            System.out.println("###### " + session + " #######");
-            session.setAttribute("userDto", userDto);
-            session.setAttribute("user_name", userDto.getUser_name());
+            session.setAttribute("loginUser", userDto);
+            session.setAttribute("user_id", userDto.getUser_id());
             return "redirect:/board/board";
         } else {
             return "user/login_form";

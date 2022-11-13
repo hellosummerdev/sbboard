@@ -74,9 +74,6 @@ public class BoardController {
                 System.out.println("comment 있음");
                 model.addAttribute("commentList", commentList);
             }
-//            System.out.println("댓글 폼에 넘겨줄 오브젝트 진입");
-            // 댓글 폼을 위해 빈 오브젝트를 view에 넘겨주기
-//            model.addAttribute("commentDto", commentDto);
             System.out.println("detail 정상 종료");
         } catch (Exception e) {
             model.addAttribute("status", 500);

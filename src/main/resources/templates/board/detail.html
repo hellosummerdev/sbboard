@@ -6,6 +6,7 @@
 <!--  게시글 내용-->
   <h1 th:text="${detail.getBoard_title()}"></h1>
   <div th:text="${detail.getUser_id()}"></div>
+  <div th:text="${#dates.format(detail.getCreated_at(), 'yyyy-MM-dd')}"></div>
   <div th:text="${detail.getBoard_content()}"></div>
 
 <!--  댓글 리스트-->
@@ -14,6 +15,8 @@
   <div>
     <ul>
       <li th:each="comment : ${commentList}" th:text="${comment.getComment_content()}"></li>
+      <li th:each="comment : ${commentList}" th:text="${comment.getUser_id()}"></li>
+      <li th:each="comment : ${commentList}" th:text="${#dates.format(comment.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></li>
     </ul>
   </div>
 
@@ -21,11 +24,11 @@
   <form th:action="@{|/comment/create/${detail.getSeq()}|}" th:object="${commentDto}" method="post">
 <!--    todo : 에러 메세지가 화면에 출력이 안 되는 이유 찾아보기 -->
     <div th:replace="layout/form_errors :: formErrorsFragment"></div>
-<!--    <div role="alert" th:if="${#fields.hasAnyErrors()}">-->
-<!--      <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
-<!--    </div>-->
+
     <textarea th:field="*{comment_content}" rows="5"></textarea>
-    <input type="hidden" th:field="*{seq}">
+<!--    <input type="hidden" value="${}">-->
+<!--      seq를 보낸 적이 없는데 어떻게 seq를 받았지?-->
+<!--    <input type="hidden" name="seq" id="seq" value="${detail.getSeq()}">-->
     <input type="submit" value="댓글달기">
   </form>
 </div>

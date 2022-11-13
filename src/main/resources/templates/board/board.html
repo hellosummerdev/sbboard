@@ -9,6 +9,7 @@
     <table>
         <thead>
         <tr>
+            <td>No</td>
             <td>Title</td>
             <td>Writer</td>
             <td>Date</td>
@@ -16,12 +17,11 @@
         </thead>
         <tbody>
         <tr th:each="board : ${boardList}">
+            <td th:text="*{board.getSeq()}"></td>
             <td>
                 <a th:href="@{|/board/detail/*{board.getSeq()}|}"  th:text="*{board.getBoard_title()}"></a>
             </td>
             <td th:text="*{board.getUser_id()}"></td>
-            <td th:if="${session != null}" th:text="${session.user_name}"></td>
-
             <td th:text="*{#dates.format(board.getCreated_at(), 'yyyy-MM-dd')}"></td>
         </tr>
         </tbody>
