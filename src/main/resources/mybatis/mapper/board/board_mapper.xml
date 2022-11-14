@@ -23,4 +23,15 @@
         from board
         where seq = #{seq}
     </select>
+
+    <update id="modifyBoard" parameterType="boardDto">
+        update board
+        set board_title = #{board_title}, board_content = #{board_content}
+        where seq = #{seq}
+    </update>
+
+    <delete id="deleteBoard" parameterType="boardDto">
+        delete from board
+        where seq = #{seq}
+    </delete>
 </mapper>

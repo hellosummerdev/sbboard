@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,7 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
-    // * 게시글 전체목록 조히
+    // * 게시판 전체목록 조히
     @GetMapping("/board")
     public String board(Model model) {
         try {
@@ -55,7 +57,7 @@ public class BoardController {
         return map;
     }
 
-    // * 게시글 상세페이지
+    // * 게시판 상세페이지 조회
     @GetMapping("/detail/{seq}")
     public String detail(Model model, @PathVariable("seq") Integer seq, CommentDto commentDto) {
         try {
@@ -82,7 +84,7 @@ public class BoardController {
         return "board/detail";
     }
 
-    // * 신규 게시글
+    // * 게시글 생성
     @GetMapping("/create")
     public String createBoard(BoardDto boardDto) {
         return "board/board_form";
@@ -107,5 +109,42 @@ public class BoardController {
         } catch (Exception e) {
             return "redirect:board/board";
         }
+    }
+
+    @PostMapping("/modify/{seq}")
+    public String modifyBoard(@Valid BoardDto boardDto, BindingResult bindingResult,
+                              @PathVariable("seq") Integer seq, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("에러 진입");
+            System.out.println("bindingresult 에러");
+            return "redirect:/board/detail/{seq}";
+        }
+
+        HttpSession session = request.getSession(false);
+        // * session이 없으면 로그인 다시 하기
+        if (session == null) {
+            return "redirect:/user/login";
+        }
+        String user_id = (String) session.getAttribute("user_id");
+
+        // * session의 유저와 게시글의 유저가 같은지 확인하기
+        if (user_id.equals(boardDto.getUser_id())) {
+            // * 유저가 같으면 글 수정
+            int isModify = boardService.modifyBoard(boardDto);
+            // * 수정에 성공하여 1을 리턴했는지 확인
+            if (isModify == 1) {
+                System.out.println("수정 성공");
+                return "redirect:/board/detail/{seq}";
+            } else {
+                // * 실패시 다시 수정할 수 있도록 해당 게시글로 보내기
+                System.out.println("수정 실패");
+                return "redirect:/board/detail/{seq}";
+            }
+        } else {
+            // * session의 유저와 같지 않을 경우 수정권한 없으므로 게시판 목록으로 보내기
+            System.out.println("수정권한이 없습니다.");
+            return "redirect:/";
+        }
+
     }
 }

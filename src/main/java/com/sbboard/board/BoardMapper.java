@@ -13,6 +13,9 @@ public interface BoardMapper {
     // * 게시판 상세페이지 조회
     BoardDto detailBoard(Integer seq);
 
-    // * 게시판 글 생성
+    // * 게시글 생성
     int createBoard(BoardDto boardDto);
+
+    // * 게시글 수정
+    int modifyBoard(BoardDto boardDto);
 }
