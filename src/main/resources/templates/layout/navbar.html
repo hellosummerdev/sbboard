@@ -10,8 +10,8 @@
     <div>
       <ul>
         <li>
-          <a th:href="@{/user/login}">Login</a>
-          <a th:href="@{/user/logout}">Logout</a>
+          <a th:href="@{/user/login}" th:if="${session.user_id == null}">Login</a>
+          <a th:href="@{/user/logout}" th:if="${session.user_id != null}">Logout</a>
         </li>
         <li>
           <a th:href="@{/user/signup}">Sign Up</a>

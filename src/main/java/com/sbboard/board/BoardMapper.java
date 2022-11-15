@@ -18,4 +18,7 @@ public interface BoardMapper {
 
     // * 게시글 수정
     int modifyBoard(BoardDto boardDto);
+
+    // * 게시글 삭제
+    int deleteBoard(Integer seq);
 }

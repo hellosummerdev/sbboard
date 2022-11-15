@@ -1,7 +1,6 @@
 package com.sbboard.board;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +32,11 @@ public class BoardService {
     public int modifyBoard(BoardDto boardDto) {
         int isModify = boardMapper.modifyBoard(boardDto);
         return isModify;
+    }
+
+    // * 게시글 삭제
+    public int deleteBoard(Integer seq) {
+        int isDelete = boardMapper.deleteBoard(seq);
+        return isDelete;
     }
 }

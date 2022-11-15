@@ -74,7 +74,6 @@ public class UserController {
 //        HttpSession이 존재하면 현재 HttpSession을 반환하고
 //        존재하지 않으면 새로이 생성하지 않고 그냥 null을 반환
         HttpSession session = request.getSession(false);
-        System.out.println("###### " + session + " #######");
         if (session != null) {
             System.out.println("session을 삭제합니다.");
             session.invalidate();

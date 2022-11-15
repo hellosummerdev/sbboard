@@ -35,8 +35,6 @@ public class CommentController {
 
         if (bindingResult.hasErrors()) {
             System.out.println("에러 진입");
-//            model.addAttribute("boardDto", new BoardDto());
-//            return String.format("redirect:/board/detail/%s", seq);
             return "redirect:/board/detail/{seq}";
         }
 
