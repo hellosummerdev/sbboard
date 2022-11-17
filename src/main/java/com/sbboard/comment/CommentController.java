@@ -70,6 +70,9 @@ public class CommentController {
         String user_id = (String) session.getAttribute("user_id");
         commentDto = commentService.selectComment(idx);
 
+        System.out.println("session user_id : " + user_id);
+        System.out.println("commentDto user_id : " + commentDto.getUser_id());
+
         // * session의 유저와 댓글의 유저가 같은지 확인하기
         if (user_id.equals(commentDto.getUser_id())) {
             model.addAttribute("commentDto", commentDto);
@@ -82,31 +85,48 @@ public class CommentController {
 
     @PostMapping("/modify/{idx}")
     public  String modifyComment(@Valid CommentDto commentDto, BindingResult bindingResult,
-                                 @PathVariable("seq") Integer seq, HttpServletRequest request) {
+//                                 @PathVariable("idx") Integer idx, Model model,
+                                 HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         // * session이 없으면 로그인 다시 하기
         if (session == null) {
             return "redirect:/user/login";
         }
 
+        // * 필수 입력항목 체크
+        if (bindingResult.hasErrors()) {
+            System.out.println("bindingresult 에러");
+            return "comment/comment_form";
+        }
+
         // * session에 저장된 user_id 가져오기
         String user_id = (String) session.getAttribute("user_id");
+        System.out.println("session user_id : " + user_id);
+        System.out.println("commentDto user_id : " + commentDto.getUser_id());
+
+        int seq = commentDto.getSeq();
 
         // * session의 유저와 댓글의 유저가 같은지 확인하기
         if (user_id.equals(commentDto.getUser_id())) {
-            // * 유저가 같으면 글 수정
+            // * 유저가 같으면 댓글 수정
+            System.out.println("댓글 수정할 commentDto select");
             int isModify = commentService.modifyComment(commentDto);
+            System.out.println(commentDto.getIdx());
+            System.out.println(commentDto.getSeq());
+            System.out.println(commentDto.getUser_id());
+            System.out.println(commentDto.getComment_content());
             // * 수정에 성공하면 1을 리턴
             if (isModify == 1) {
                 System.out.println("수정 성공");
-                return "redirect:/board/detail/{seq}";
+                return String.format("redirect:/board/detail/%s", seq);
             } else {
                 // * 실패시 다시 수정할 수 있도록 해당 게시글로 보내가
                 System.out.println("수정 실패");
-                return "redirect:/board/detail/{seq}";
+                return String.format("redirect:/board/detail/%s", seq);
             }
         } else {
-            return "redirect:/board/detail/{seq}";
+            System.out.println("session 유저와 댓글의 유저가 다름");
+            return String.format("redirect:/board/detail/%s", seq);
         }
     }
 

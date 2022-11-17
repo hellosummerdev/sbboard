@@ -16,7 +16,7 @@
         from comment
         where use_yn = 1
         and seq = #{seq}
-        order by created_at desc
+        order by modified_at desc
     </select>
 
 <!--    댓글 한 개 조회 -->

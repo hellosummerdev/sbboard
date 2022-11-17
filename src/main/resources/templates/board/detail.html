@@ -9,12 +9,12 @@
   <div th:text="${#dates.format(detail.getCreated_at(), 'yyyy-MM-dd')}"></div>
   <div th:text="${detail.getBoard_content()}"></div>
 
-<!--  수정버튼 -->
+<!--  게시글 수정버튼 -->
   <div>
     <a th:href="@{|/board/modify/${detail.getSeq()}|}"
        th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="수정"></a>
 
-<!--    삭제버튼 -->
+<!--   게시글 삭제버튼 -->
     <a href="javascript:void(0);" class="delete" th:data-uri="@{|/board/delete/${detail.getSeq()}|}"
       th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="삭제"></a>
   </div>
@@ -22,11 +22,14 @@
 <!--  여기서 자꾸 500 에러 발생-->
 <!--  <h5 th:text="|${#lists.size(commentList)}개의 답변이 있습니다.|"></h5>-->
   <div th:each="comment : ${commentList}">
+    <div th:text="${comment.getIdx()}"></div>
     <div th:text="${comment.getComment_content()}"></div>
     <div th:text="${comment.getUser_id()}"></div>
     <div th:text="${#dates.format(comment.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></div>
+
+    <!--    댓글 수정버튼 -->
     <div>
-      <a th:href="@{/comment/modify/${comment.getIdx()}}"
+      <a th:href="@{|/comment/modify/${comment.getIdx()}|}"
          th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="수정"></a>
     </div>
   </div>

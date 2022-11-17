@@ -6,8 +6,11 @@
   <h5>댓글 수정</h5>
 
   <form th:object="${commentDto}" method="post">
-    <div th:replace="form_errors :: formErrorsFragment"></div>
+    <div th:replace="layout/form_errors :: formErrorsFragment"></div>
     <div>
+      <input type="hidden" th:field="*{idx}" />
+      <input type="hidden" th:field="*{seq}" />
+      <input type="hidden" th:field="*{user_id}" />
       <label th:for="comment_content">내용</label>
       <textarea th:field="*{comment_content}" rows="5"></textarea>
       <input type="submit" value="저장하기">
