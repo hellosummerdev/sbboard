@@ -18,4 +18,6 @@ public interface CommentMapper {
     int modifyComment(CommentDto commentDto);
 
     CommentDto selectComment(Integer idx);
+
+    int deleteComment(Integer idx, int seq);
 }

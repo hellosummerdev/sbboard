@@ -31,5 +31,12 @@
         update comment
         set comment_content = #{comment_content}
         where idx = #{idx}
+        and seq = #{seq}
     </update>
+
+<!--    댓글 삭제-->
+    <delete id="deleteComment" parameterType="int">
+        delete from comment
+        where idx = #{idx}
+    </delete>
 </mapper>

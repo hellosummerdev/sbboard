@@ -16,7 +16,7 @@
 
 <!--   게시글 삭제버튼 -->
     <a href="javascript:void(0);" class="delete" th:data-uri="@{|/board/delete/${detail.getSeq()}|}"
-      th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="삭제"></a>
+       th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="삭제"></a>
   </div>
 <!--  댓글 리스트-->
 <!--  여기서 자꾸 500 에러 발생-->
@@ -27,10 +27,13 @@
     <div th:text="${comment.getUser_id()}"></div>
     <div th:text="${#dates.format(comment.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></div>
 
-    <!--    댓글 수정버튼 -->
     <div>
-      <a th:href="@{|/comment/modify/${comment.getIdx()}|}"
+    <!--      댓글 수정버튼 -->
+      <a th:href="@{|/comment/delete/${comment.getIdx()}|}"
          th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="수정"></a>
+    <!--      댓글 삭제버튼-->
+      <a href="javascript:void(0);" class="delete" th:data-uri="@{|/comment/delete/${comment.getIdx()}|}"
+         th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="삭제"></a>
     </div>
   </div>
 

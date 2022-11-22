@@ -85,7 +85,6 @@ public class CommentController {
 
     @PostMapping("/modify/{idx}")
     public  String modifyComment(@Valid CommentDto commentDto, BindingResult bindingResult,
-//                                 @PathVariable("idx") Integer idx, Model model,
                                  HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         // * session이 없으면 로그인 다시 하기
@@ -130,4 +129,38 @@ public class CommentController {
         }
     }
 
+    @GetMapping("/delete/{idx}")
+    public String deleteComment(@PathVariable("idx") Integer idx, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        // * 세션이 없으면 로그인
+        if (session == null) {
+            return "redirect:/user/login";
+        }
+
+        // * session에서 아이디 가져오기
+        String user_id = (String) session.getAttribute("user_id");
+        System.out.println("session user_id : " + user_id);
+        // * idx로 해당 게시물 가져오기
+        CommentDto commentDto = commentService.selectComment(idx);
+        System.out.println("commentDto user_id : " + commentDto.getUser_id());
+
+        int seq = commentDto.getSeq();
+
+        // * 세션 사용자와 댓글 사용자 일치 확인
+        if (user_id.equals(commentDto.getUser_id())) {
+            System.out.println("delete 진입");
+            int isDelete = commentService.deleteComment(idx, seq);
+            if (isDelete == 1) {
+                // * 성공시 게시판 목록으로 보내기
+                return "redirect:/";
+            } else {
+                // * 실패시 다시 삭제할 수 있도록 해당 게시글로 보내기
+                return "redirect:/detail/{seq}";
+            }
+        } else {
+            System.out.println("삭제 권한이 없습니다.");
+            return "redirect:/board/detail/{seq}";
+        }
+    }
 }
