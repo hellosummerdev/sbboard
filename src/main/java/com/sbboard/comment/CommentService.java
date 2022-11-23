@@ -35,8 +35,8 @@ public class CommentService {
         return isModify;
     }
 
-    public int deleteComment(Integer idx, int seq) {
-        int isDelete = commentMapper.deleteComment(idx, seq);
+    public int deleteComment(Integer idx) {
+        int isDelete = commentMapper.deleteComment(idx);
         return  isDelete;
     }
 }

@@ -97,13 +97,18 @@ public class BoardController {
     }
 
     @PostMapping("/create")
-    public String createBoard(@Valid BoardDto boardDto, BindingResult bindingResult) {
+    public String createBoard(@Valid BoardDto boardDto, BindingResult bindingResult,
+                              HttpServletRequest request) {
         // 오류가 있는 경우에 다시 폼 작성 화면 렌더링
         if (bindingResult.hasErrors()) {
             return "board/board_form";
         }
-
         try {
+            System.out.println("create board 진입");
+            HttpSession session = request.getSession();
+            String user_id = (String) session.getAttribute("user_id");
+            boardDto.setUser_id(user_id);
+
             int isCreate = boardService.createBoard(boardDto);
 
             if (isCreate == 1) {
@@ -111,9 +116,10 @@ public class BoardController {
             } else {
                 System.out.println("게시글 등록 실패");
             }
-            return "redirect:board/board";
+            // todo : 게시글 생성되면 생성된 게시글로 어떻게 바로 보내지?
+            return "redirect:/board/board";
         } catch (Exception e) {
-            return "redirect:board/board";
+            return "redirect:/";
         }
     }
 

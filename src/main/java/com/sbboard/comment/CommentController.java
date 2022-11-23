@@ -41,6 +41,7 @@ public class CommentController {
             String user_id = (String) session.getAttribute("user_id");
             commentDto.setUser_id(user_id);
             commentDto.setSeq(seq);
+
             int isCreate = commentService.create(commentDto);
             if (isCreate == 1) {
                 System.out.println("댓글 저장 성공");
@@ -50,7 +51,7 @@ public class CommentController {
             }
             return String.format("redirect:/board/detail/%s", seq);
         } catch (Exception e) {
-            return "redirect:/board/detail/{seq}";
+            return "redirect:/";
         }
 
     }
@@ -116,13 +117,11 @@ public class CommentController {
             System.out.println(commentDto.getComment_content());
             // * 수정에 성공하면 1을 리턴
             if (isModify == 1) {
-                System.out.println("수정 성공");
-                return String.format("redirect:/board/detail/%s", seq);
+                System.out.println("댓글 수정 성공");
             } else {
-                // * 실패시 다시 수정할 수 있도록 해당 게시글로 보내가
-                System.out.println("수정 실패");
-                return String.format("redirect:/board/detail/%s", seq);
+                System.out.println("댓글 수정 실패");
             }
+            return String.format("redirect:/board/detail/%s", seq);
         } else {
             System.out.println("session 유저와 댓글의 유저가 다름");
             return String.format("redirect:/board/detail/%s", seq);
@@ -150,17 +149,16 @@ public class CommentController {
         // * 세션 사용자와 댓글 사용자 일치 확인
         if (user_id.equals(commentDto.getUser_id())) {
             System.out.println("delete 진입");
-            int isDelete = commentService.deleteComment(idx, seq);
+            int isDelete = commentService.deleteComment(idx);
             if (isDelete == 1) {
-                // * 성공시 게시판 목록으로 보내기
-                return "redirect:/";
+                System.out.println("댓글 삭제 성공");
             } else {
-                // * 실패시 다시 삭제할 수 있도록 해당 게시글로 보내기
-                return "redirect:/detail/{seq}";
+                System.out.println("댓글 삭제 실패");
             }
+            return String.format("redirect:/board/detail/%s", seq);
         } else {
             System.out.println("삭제 권한이 없습니다.");
-            return "redirect:/board/detail/{seq}";
+            return String.format("redirect:/board/detail/%s", seq);
         }
     }
 }

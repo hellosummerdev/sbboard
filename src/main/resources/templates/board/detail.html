@@ -29,7 +29,7 @@
 
     <div>
     <!--      댓글 수정버튼 -->
-      <a th:href="@{|/comment/delete/${comment.getIdx()}|}"
+      <a th:href="@{|/comment/modify/${comment.getIdx()}|}"
          th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="수정"></a>
     <!--      댓글 삭제버튼-->
       <a href="javascript:void(0);" class="delete" th:data-uri="@{|/comment/delete/${comment.getIdx()}|}"
