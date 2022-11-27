@@ -45,6 +45,9 @@ dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
+	// * markdown
+	implementation 'org.commonmark:commonmark:0.18.2'
+
 	// Test ( 우리가 추가한거 아님 )
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

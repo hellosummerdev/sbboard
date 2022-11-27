@@ -7,7 +7,7 @@
   <h1 th:text="${detail.getBoard_title()}"></h1>
   <div th:text="${detail.getUser_id()}"></div>
   <div th:text="${#dates.format(detail.getCreated_at(), 'yyyy-MM-dd')}"></div>
-  <div th:text="${detail.getBoard_content()}"></div>
+  <div th:utext="${@commonUtil.markdown(detail.getBoard_content())}"></div>
 
 <!--  게시글 수정버튼 -->
   <div>
@@ -23,7 +23,7 @@
 <!--  <h5 th:text="|${#lists.size(commentList)}개의 답변이 있습니다.|"></h5>-->
   <div th:each="comment : ${commentList}">
     <div th:text="${comment.getIdx()}"></div>
-    <div th:text="${comment.getComment_content()}"></div>
+    <div th:utext="${@commonUtil.markdown(comment.getComment_content())}"></div>
     <div th:text="${comment.getUser_id()}"></div>
     <div th:text="${#dates.format(comment.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></div>
 
