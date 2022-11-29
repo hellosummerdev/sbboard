@@ -2,21 +2,42 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<nav th:fragment="navbarFragment">
-  <div>
-    <a href="/">SBB</a>
-    <button type="button"></button>
-<!--      todo : toggler 추가하기-->
-    <div>
-      <ul>
-        <li>
-          <a th:href="@{/user/login}" th:if="${session.user_id == null}">Login</a>
-          <a th:href="@{/user/logout}" th:if="${session.user_id != null}">Logout</a>
+<!--<nav >-->
+<!--  <div>-->
+<!--    <a href="/">SBB</a>-->
+<!--    <button type="button"></button>-->
+<!--    <div>-->
+<!--      <ul>-->
+<!--        <li>-->
+<!--          <a th:href="@{/user/login}" th:if="${session.user_id == null}">Login</a>-->
+<!--          <a th:href="@{/user/logout}" th:if="${session.user_id != null}">Logout</a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <a th:href="@{/user/signup}">Sign Up</a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
+
+<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">SBB</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user/login}" th:if="${session.user_id == null}">로그인</a>
+          <a class="nav-link" th:href="@{/user/logout}" th:if="${session.user_id != null}">로그아웃</a>
         </li>
-        <li>
-          <a th:href="@{/user/signup}">Sign Up</a>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user/signup}">회원가입</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+

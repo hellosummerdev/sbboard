@@ -2,51 +2,66 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout/layout}">
-<div layout:fragment="content">
-<!--  게시글 내용-->
-  <h1 th:text="${detail.getBoard_title()}"></h1>
-  <div th:text="${detail.getUser_id()}"></div>
-  <div th:text="${#dates.format(detail.getCreated_at(), 'yyyy-MM-dd')}"></div>
-  <div th:utext="${@commonUtil.markdown(detail.getBoard_content())}"></div>
+<div class="container my-3" layout:fragment="content">
 
-<!--  게시글 수정버튼 -->
-  <div>
-    <a th:href="@{|/board/modify/${detail.getSeq()}|}"
-       th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="수정"></a>
+  <!--  게시글 내용-->
+  <h2 class="border-bottom py-2" th:text="${detail.getBoard_title()}"></h2>
+  <div class="card my-3">
+    <div class="card-body">
+      <div class="card-text" style="white-space: pre-line;" th:utext="${@commonUtil.markdown(detail.getBoard_content())}"></div>
+      <div class="d-flex justify-content-end">
+        <div class="badge bg-light text-dark p-2 text-start">
+          <div th:text="${detail.getUser_id()}"></div>
+          <div th:text="${#dates.format(detail.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+      </div>
+      <!--  게시글 수정버튼 -->
+      <div class="my-3">
+        <a th:href="@{|/board/modify/${detail.getSeq()}|}" class="btn btn-sm btn-outline-secondary"
+           th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="수정"></a>
 
-<!--   게시글 삭제버튼 -->
-    <a href="javascript:void(0);" class="delete" th:data-uri="@{|/board/delete/${detail.getSeq()}|}"
-       th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="삭제"></a>
-  </div>
-<!--  댓글 리스트-->
-<!--  여기서 자꾸 500 에러 발생-->
-<!--  <h5 th:text="|${#lists.size(commentList)}개의 답변이 있습니다.|"></h5>-->
-  <div th:each="comment : ${commentList}">
-    <div th:text="${comment.getIdx()}"></div>
-    <div th:utext="${@commonUtil.markdown(comment.getComment_content())}"></div>
-    <div th:text="${comment.getUser_id()}"></div>
-    <div th:text="${#dates.format(comment.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></div>
-
-    <div>
-    <!--      댓글 수정버튼 -->
-      <a th:href="@{|/comment/modify/${comment.getIdx()}|}"
-         th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="수정"></a>
-    <!--      댓글 삭제버튼-->
-      <a href="javascript:void(0);" class="delete" th:data-uri="@{|/comment/delete/${comment.getIdx()}|}"
-         th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="삭제"></a>
+        <!--   게시글 삭제버튼 -->
+        <a href="javascript:void(0);" class="delete btn btn-sm btn-outline-secondary" th:data-uri="@{|/board/delete/${detail.getSeq()}|}"
+           th:if="${session.user_id != null and session.user_id == detail.getUser_id()}" th:text="삭제"></a>
+      </div>
     </div>
   </div>
 
-<!--  댓글 폼-->
-  <form th:action="@{|/comment/create/${detail.getSeq()}|}" th:object="${commentDto}" method="post">
-<!--    todo : 에러 메세지가 화면에 출력이 안 되는 이유 찾아보기 -->
-    <div th:replace="layout/form_errors :: formErrorsFragment"></div>
+  <!--  댓글 표시-->
+  <!--  댓글 리스트-->
+  <h5 class="border-bottom my-3 py-2"
+      th:text="|${#lists.size(commentList)}개의 답변이 있습니다.|"></h5>
+  <div class="card my-3" th:each="comment : ${commentList}">
+    <div class="card-body">
+      <div class="card-text" style="white-space: pre-line;" th:utext="${@commonUtil.markdown(comment.getComment_content())}"></div>
+      <div class="d-flex justify-content-end">
+        <div class="badge bg-light text-dark p-2 text-start">
+          <div th:text="${comment.getUser_id()}" class="mb-2"></div>
+          <div th:text="${#dates.format(comment.getCreated_at(), 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+      </div>
+      <div class="my-3">
+        <!--    댓글 수정버튼-->
+        <a th:href="@{|/comment/modify/${comment.getIdx()}|}" class="btn btn-sm btn-outline-secondary"
+           th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="수정"></a>
+        <!--    댓글 삭제버튼-->
+        <a href="javascript:void(0);" class="delete btn btn-sm btn-outline-secondary" th:data-uri="@{|/comment/delete/${comment.getIdx()}|}"
+           th:if="${session.user_id != null and session.user_id == comment.getUser_id()}" th:text="삭제"></a>
+      </div>
+    </div>
+  </div>
 
-    <textarea th:field="*{comment_content}" rows="5"></textarea>
-<!--      seq를 보낸 적이 없는데 어떻게 seq를 받았지?-->
-    <input type="submit" value="댓글달기">
+  <!--  댓글 폼-->
+  <form th:action="@{|/comment/create/${detail.getSeq()}|}" th:object="${commentDto}" method="post" class="my-3">
+    <!--    todo : 에러 메세지가 화면에 출력이 안 되는 이유 찾아보기 -->
+    <div th:replace="layout/form_errors :: formErrorsFragment"></div>
+    <textarea th:field="*{comment_content}" rows="5" class="form-control"></textarea>
+    <!--      seq를 보낸 적이 없는데 어떻게 seq를 받았지?-->
+    <input type="submit" value="댓글달기" class="btn btn-primary my-2">
   </form>
+
 </div>
+
 
 <script layout:fragment="script" type="text/javascript">
   const delete_elements = document.getElementsByClassName("delete");

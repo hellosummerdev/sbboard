@@ -3,9 +3,8 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout/layout}">
-
-<div layout:fragment="content">
-    <h5>질문 등록하기</h5>
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문 등록하기</h5>
 
 <!--    th:object를 사용하여 폼의 속성들이 boarDto의 속성들로 구성된다는 점을 타임리프 엔진에 알려준다-->
     <form th:object="${boardDto}" method="post">
@@ -13,16 +12,16 @@
         <div>
             <input type="hidden" th:field="*{user_id}">
         </div>
-        <div>
-            <label th:for="board_title">제목</label>
-            <input type="text" th:field="*{board_title}">
+        <div class="mb-3">
+            <label th:for="board_title" class="form-label">제목</label>
+            <input type="text" th:field="*{board_title}" class="form-control">
 <!--            name="subject", name="content"와 같이 사용하던 부분을 위와 같이 th:field 속성을 사용하도록 변경하였다.
                 이렇게 하면 해당 태그의 id, name, value 속성이 모두 자동으로 생성되고 타임리프가 value 속성에 기존 값을 채워 넣어 오류가 발생하더라도 기존에 입력한 값이 유지된다.-->
         </div>
-        <div>
-            <label th:for="board_content">내용</label>
-            <textarea th:field="*{board_content}" rows="10"></textarea>
-            <input type="submit" value="저장하기">
+        <div class="mb-3">
+            <label th:for="board_content" class="form-label">내용</label>
+            <textarea th:field="*{board_content}" class="form-control" rows="10"></textarea>
+            <input type="submit" value="저장하기" class="form-control">
         </div>
     </form>
 </div>
